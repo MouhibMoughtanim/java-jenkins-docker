@@ -51,7 +51,7 @@ pipeline {
        
             steps {
                 script {
-                    sh 'ansible-playbook /ansible/playbooks/playbook.yml'
+                    sh '/usr/bin/ansible-playbook /ansible/playbooks/playbook.yml'
                 }
             }
         }
