@@ -48,14 +48,14 @@ pipeline {
         }
 
         stage('Run Ansible Playbook') {
-    steps {
-        script {
-            docker.image('mouhibmoughtanim/devops_ansible:latest').inside {
-                sh '/usr/bin/ansible-playbook /ansible/playbooks/playbook.yml'
+            steps {
+                script {
+                    docker.image('mouhibmoughtanim/devops_ansible:latest').inside("-v /home/mouhib/Desktop:/ansible/playbooks") {
+                        sh '/usr/bin/ansible-playbook /ansible/playbooks/playbook.yml'
+                    }
+                }
             }
         }
     }
 }
 
-    }
-}
