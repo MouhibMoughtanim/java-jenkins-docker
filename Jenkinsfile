@@ -53,7 +53,7 @@ pipeline {
        stage('Run Ansible Playbook') {
     agent {
         docker {
-            image 'your-ansible-image'
+            image 'my-ansible-image'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
