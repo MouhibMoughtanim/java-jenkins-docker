@@ -4,7 +4,7 @@ pipeline {
         registryCredential = 'dockerhub_id'
         dockerImage=''
     }
-    agent any
+   
 
     tools {
         maven 'maven-3.9.6'
@@ -51,10 +51,10 @@ pipeline {
         }
       
        stage('Run Ansible Playbook') {
-     agent {
+       agent {
         dockerfile 'Dockerfile-ansible'
         args '-v /var/run/docker.sock:/var/run/docker.sock'
-    }
+      }
     steps {
         script {
             sh 'ansible-playbook /ansible/playbooks/playbook.yml'
