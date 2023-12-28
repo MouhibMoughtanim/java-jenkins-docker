@@ -4,14 +4,16 @@ pipeline {
         registryCredential = 'dockerhub_id'
         dockerImage=''
     }
-    agent any
+   
 
     tools {
         maven 'maven-3.9.6'
     }
 
     stages {
+
         stage('Build') {
+            agent any
             steps {
                 script {
                     sh 'mvn -B -DskipTests clean package'
@@ -20,7 +22,9 @@ pipeline {
         }
 
         stage('Test') {
-            steps {
+                 agent any
+
+               steps {
                 script {
                     sh 'mvn test'
                 }
@@ -33,6 +37,8 @@ pipeline {
         }
 
         stage('Building our image') {
+             agent any
+
             steps {
                 script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -41,6 +47,8 @@ pipeline {
         }
 
         stage('Deploy our image') {
+             agent any
+ 
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
