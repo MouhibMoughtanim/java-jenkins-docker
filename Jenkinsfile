@@ -52,10 +52,9 @@ pipeline {
       
        stage('Run Ansible Playbook') {
       agent {
-        docker {
-                    image 'my-ansible-image'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
+         dockerfile {
+            filename 'Dockerfile-ansible'
+        }       
      }
     steps {
         script {
