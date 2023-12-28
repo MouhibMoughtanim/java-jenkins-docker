@@ -51,12 +51,19 @@ pipeline {
         }
       
        stage('Run Ansible Playbook') {
-            steps {
-                script {
-                    ansiblePlaybook playbook: '/home/playbook.yml'
-                }
-            }
+    agent {
+        docker {
+            image 'your-ansible-image:tag'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
+    }
+    steps {
+        script {
+            sh 'ansible-playbook /ansible/playbooks/playbook.yml'
+        }
+    }
+}
+
      
     }
 }
