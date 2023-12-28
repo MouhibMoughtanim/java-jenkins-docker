@@ -51,7 +51,9 @@ pipeline {
         }
       
        stage('Run Ansible Playbook') {
-    agent any
+      agent {
+                label 'my-ansible-image' // Specify the label of your Docker agent
+            }
     steps {
         script {
             sh 'ansible-playbook /ansible/playbooks/playbook.yml'
