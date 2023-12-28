@@ -51,11 +51,10 @@ pipeline {
         }
       
        stage('Run Ansible Playbook') {
-      agent {
-         dockerfile {
-            filename 'Dockerfile-ansible'
-        }       
-     }
+     agent {
+        dockerfile 'Dockerfile-ansible'
+        args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
     steps {
         script {
             sh 'ansible-playbook /ansible/playbooks/playbook.yml'
