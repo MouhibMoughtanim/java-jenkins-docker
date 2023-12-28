@@ -50,9 +50,7 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 script {
-  
-                   sh 'chmod -R 777 /ansible'
-                   
+                
                    docker.image('mouhibmoughtanim/devops_ansible:latest').inside("-v /home/mouhib/Desktop:/ansible/playbooks") {
                          sh '/usr/bin/ansible-playbook /ansible/playbooks/playbook.yml'
                     }
