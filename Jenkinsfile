@@ -47,12 +47,15 @@ pipeline {
             }
         }
 
-        stage('Run Ansible Playbook') {
+               stage('Run Ansible Playbook') {
             steps {
                 script {
-                
-                   docker.image('mouhibmoughtanim/devops_ansible:latest').inside("-v /home/mouhib/Desktop:/ansible/playbooks") {
-                         sh '/usr/bin/ansible-playbook /ansible/playbooks/playbook.yml'
+                    // Set ANSIBLE_LOCAL_TEMP to a writable directory within the workspace
+                    withEnv(['ANSIBLE_LOCAL_TEMP=.ansible/tmp']) {
+                        // Run the Docker container in privileged mode
+                        docker.image('mouhibmoughtanim/devops_ansible:latest').inside("-v /home/mouhib/Desktop:/ansible/playbooks -v /var/jenkins_home/workspace/SmartIrrigationPipeline:/workspace --privileged") {
+                            sh '/usr/bin/ansible-playbook /ansible/playbooks/playbook.yml'
+                        }
                     }
                 }
             }
