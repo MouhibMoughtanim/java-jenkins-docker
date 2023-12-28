@@ -1,11 +1,11 @@
 pipeline {
+    agent any
+
     environment {
         registry = "mouhibmoughtanim/java-jenkins-docker"
         registryCredential = 'dockerhub_id'
         dockerImage=''
     }
-
-    agent any
 
     tools {
         maven 'maven-3.9.6'
@@ -14,17 +14,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    sh 'mvn -B -DskipTests clean package'
-                }
+                sh 'mvn -B -DskipTests clean package'
             }
         }
 
         stage('Test') {
             steps {
-                script {
-                    sh 'mvn test'
-                }
+                sh 'mvn test'
             }
             post {
                 always {
@@ -50,7 +46,7 @@ pipeline {
                 }
             }
         }
-      
+
         stage('Run Ansible Playbook') {
             agent {
                 dockerfile 'Dockerfile-ansible'
@@ -64,4 +60,3 @@ pipeline {
         }
     }
 }
-
