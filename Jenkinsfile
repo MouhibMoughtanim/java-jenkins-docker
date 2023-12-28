@@ -55,6 +55,7 @@ pipeline {
         docker {
             image 'my-ansible-image'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
+             label 'docker'  
         }
     }
     steps {
